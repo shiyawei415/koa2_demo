@@ -1,0 +1,83 @@
+*{
+    margin: 0;
+    padding: 0;
+}
+.main{
+    width: 1000px;
+    height: 1000px;
+    margin: 0 auto;
+    border-left: 1px solid #ccc;
+    box-sizing: border-box;
+    padding: 20px;
+}
+.main header{
+    font-size: 30px;
+    
+    border-bottom: 1px solid #ccc;
+    padding-bottom: 20px;
+    margin-bottom: 20px;
+
+}
+
+.content .table1{
+    width: 100%;
+    text-align: center;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+    margin-top: 50px;
+}
+.content .table1 tr td{
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 5px;
+}
+
+.form input {
+    display: inline-block;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+    text-align: center;
+}
+.form .span {
+    display: inline-block;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+    text-align: center;
+}
+
+.black_box{
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, .5);
+}
+.alert_box{
+    position: fixed;
+    width: 800px;
+    height: 300px;
+    margin:-150px 0 0 -400px ;
+    left: 50%;
+    top: 50%;
+    background: #fff;
+    border-radius: 5px;
+    padding: 10px;
+
+}
+.alert_box .form{
+    margin-top: 80px;
+    margin-left: 50px;
+}
+.alert_box  .js_close{
+    font-size:50px;
+    position: absolute;
+    top: 0px;
+    right: 20px;
+    cursor: pointer;
+    user-select: none;
+}
