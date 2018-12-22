@@ -5,6 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
+
+    <link rel="shortcut icon" type="image/x-icon" href="/images/favicon.ico" />
     <script src="/js/jquery-3.3.1.min.js"></script>
     
     <link rel="stylesheet" href="/css/index.css">
@@ -13,12 +15,16 @@
     <script type="text/javascript" src="/js/vue.min.js"></script>
     <script type="text/javascript" src="/js/iview.min.js"></script>
 
-    <title>Document</title>
+    <title>添加商品</title>
 </head>
 
 <body>
     <div id="app" class="main">
-        <header>我的商品列表</header>
+
+        <header>
+            <a href="" class="on">添加商品</a>
+            <a href="http://localhost:8080/excel" >导出商品</a>
+        </header>
 
         <div class="form">
             <input type="text" placeholder="商品名称" v-model="googs.name">
@@ -27,19 +33,18 @@
             <input type="number" placeholder="数量" v-model="googs.num">
             <input type="text" placeholder="单位" v-model="googs.company">
             <i-button type="primary" @click="add">添加</i-button>
-
         </div>
 
         <div class="content">
             <table cellspacing="0" cellpadding="0" class="table1">
                 <thead>
                     <tr>
-                        <td>序号</td>
-                        <td>商品名称</td>
-                        <td>单位</td>
-                        <td>数量</td>
-                        <td>单价</td>
-                        <td>操作</td>
+                        <td width="10%">序号</td>
+                        <td width="30%">商品名称</td>
+                        <td width="10%">单价</td>
+                        <td width="10%">数量</td>
+                        <td width="10%">单位</td>
+                        <td width="30%">操作</td>
                     </tr>
                 </thead>
 
@@ -47,9 +52,9 @@
                     <tr v-for="(item,index) in list" :key="index">
                         <td>{{(index+1)}}</td>
                         <td>{{item.name}}</td>
-                        <td>{{item.company}}</td>
+                        <td>{{item.price}} 元</td>
                         <td>{{item.num}}</td>
-                        <td>{{item.price}}</td>
+                        <td>{{item.company}}</td>
                         <td>
                             <i-button type="primary" @click="toggleAlert(item)">编辑</i-button>
                             <i-button type="error" @click="delect(item._id,index)">删除</i-button>
@@ -63,6 +68,7 @@
             <div class="black_box"></div>
             <div class="alert_box">
                 <div class="js_close" @click="toggleAlert">×</div>
+                <h3>修改商品:</h3>
                 <div class="form">
                     <input type="text" placeholder="商品名称" v-model="curgoogs.name">
                     <input type="number" placeholder="价格" v-model="curgoogs.price">
@@ -73,6 +79,9 @@
                 </div>
             </div>
         </div>
+
+        <Spin v-if="isload" fix>{{loadtxt}}</Spin>
+
     </div>
 
 

@@ -1,35 +1,8 @@
-
-//获取list
-function getList(){
-    $.ajax({url:'/getlist'}).then( res =>{
-        let dhtml = '';
-        res.forEach((item,index) => {
-            dhtml+=`
-            <tr>
-                <td>${(index+1)}</td>
-                <td>${item.name}</td>
-                <td>${item.company}</td>
-                <td>${item.num}</td>
-                <td>${item.price}</td>
-                <td>
-                    <button>编辑</button> 
-                    <button>修改</button>
-                </td>
-            </tr>
-            `
-        });
-
-        $('.table1 .tbody1').html(dhtml);
-    })
-}
-
-$(function (){
-   // getList();
-})
-
 new Vue({
     el: '#app',
     data: {
+        isload:false,
+        loadtxt:'',
         ishow:false,
         list: [],
         googs:{
@@ -55,6 +28,7 @@ new Vue({
             this.ishow = !this.ishow;
         },
 
+        //增加
         add(){
             let {name,price,company,num} = this.googs;
             let that = this;
@@ -62,36 +36,48 @@ new Vue({
                 alert('请填写物品信息')
                 return;
             }
+            this.toggleLoad(true,'添加中...');
             $.post({
                 url:'/addItem',
                 data:{ name,price,company,num }
             }).then( res =>{
+                this.toggleLoad(false);
                 if(res.code == 0){
                     that.getlist();
                     that.googs.name = '';
                 }
-                alert(res.msg)
+                this.$Message.info({
+                    content: res.msg,
+                    duration: 2
+                });
             })
         },
 
+        //删除
         delect(id,index){
-            let r=confirm("确定删除吗？");
+            let name = this.list[index].name;
+            let r=confirm("确定删除  "+name+"   吗？");
             let that = this;
             if(r){
+                this.toggleLoad(true,'删除中...');
                 $.post({
                     url:'/delItem',
                     data:{ id }
                 }).then( res =>{
                     if(res.code == 0){
-                        
                         that.list.splice(index,1);
+                        that.toggleLoad(false);
                     }
-                    alert(res.msg)
+                    this.$Message.info({
+                        content: res.msg,
+                        duration: 2
+                    });
                 })
             }
             
         },
 
+        //修改
         updata(){
             let { name,price,company,num, _id } = this.curgoogs;
             let that = this;
@@ -99,7 +85,7 @@ new Vue({
                 alert('请填写物品信息')
                 return;
             }
-            console.log(name,price,company,num)
+            this.toggleLoad(true,'修改中...');
             $.post({
                 url:'/updataItem',
                 data:{ name,price,company,num ,id:_id}
@@ -108,14 +94,34 @@ new Vue({
                     that.getlist();
                     that.ishow = false;
                 }
-                alert(res.msg)
+                this.$Message.info({
+                    content: res.msg,
+                    duration: 2
+                });
             })
         },
 
+        //获取list
         getlist() {
+            this.toggleLoad(true);
+            
             $.ajax({url:'/getlist'}).then( res =>{
                 this.list = res;
+                this.toggleLoad(false);
             })
         },
+
+        //切换显示load
+        toggleLoad(flag,txt){
+            txt = txt || '加载中...';
+            this.loadtxt = txt;
+            if(flag){
+                this.isload = flag;
+            }else{
+                setTimeout(_=>{
+                    this.isload = flag;
+                },500)
+            }
+        }
     }
 })

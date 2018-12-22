@@ -7,6 +7,10 @@ router.get('/', async (ctx, next) => {
   })
 })
 
+router.get('/excel', async (ctx, next) => {
+  await ctx.render('excel');
+})
+
 
 //获取所以物品list
 router.get('/getList', async ctx => {

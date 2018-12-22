@@ -1,0 +1,147 @@
+* {
+    margin: 0;
+    padding: 0;
+}
+
+.main {
+    width: 1000px;
+    height: 1000px;
+    margin: 0 auto;
+    border-left: 1px solid #ccc;
+    padding-left: 20px;
+    text-align: center;
+}
+
+.main header {
+    height: 40px;
+    line-height: 40px;
+    font-size: 30px;
+    text-align: left;
+    border-bottom: 1px solid #ccc;
+    margin: 20px 0;
+}
+
+.main header a {
+    font-size: 26px;
+    color: #333;
+    text-decoration: none;
+    padding: 0 10px;
+}
+
+.main header a.on {
+    color: blue;
+}
+
+.top_form {
+    width: 1000px;
+    overflow: hidden;
+    font-size: 18px;
+    margin: 0 auto;
+}
+
+.top_form p {
+    overflow: hidden;
+    margin: 10px 0;
+    line-height: 25px;
+    display: flex;
+    width: 200px;
+    float: left;
+}
+
+.top_form p label {
+    width: 4em;
+    float: left;
+    text-align: center;
+    line-height: 25px;
+    font-size: 14px;
+}
+
+.top_form p input {
+    width: 100px;
+    height: 25px;
+    line-height: 25px;
+    border: 1px solid #ccc;
+    padding-left: 10px;
+}
+
+.top_form #goods {
+    flex: 1;
+    height: 35px;
+    line-height: 35px;
+    border: 1px solid #ccc;
+    float: left;
+    margin: 0 5% 0 0;
+}
+
+.top_form button {
+    width: 4em;
+    height: 35px;
+    line-height: 35px;
+    float: left;
+}
+
+.form_box select,
+.form_box input {
+    float: left;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+    padding: 0;
+    text-align: center;
+}
+
+.form_box input[type="button"] {
+    float: left;
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    margin-right: 10px;
+    padding: 0;
+    text-align: center;
+    background:#2D8CF0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+}
+
+.form_box span {
+    float: left;
+    width: 30px;
+    height: 30px;
+    line-height: 30px;
+}
+
+.table_box table {
+    width: 100%;
+    margin: 20px auto;
+    border-top: 1px solid #ccc;
+    border-left: 1px solid #ccc;
+}
+
+.table_box table td {
+    border-right: 1px solid #ccc;
+    border-bottom: 1px solid #ccc;
+    padding: 5px 0;
+}
+
+
+.table_box table td button {
+    background: #ef4f4f;
+    color: #fff;
+    border: none;
+    border-radius: 3px;
+    padding: 5px 10px;
+}
+
+.table_box .excel{
+    width: 100px;
+    height: 30px;
+    line-height: 30px;
+    text-align: center;
+    background:#2D8CF0;
+    color: #fff;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+}
