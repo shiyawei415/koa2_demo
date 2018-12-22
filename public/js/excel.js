@@ -29,7 +29,7 @@ new Vue({
     methods: {
         getList() {
             $.ajax({
-                url: 'http://localhost:8080/getlist'
+                url: '/getlist'
             }).then(res => {
                 this.goodsArr = res;
                 this.curval = res[0];
