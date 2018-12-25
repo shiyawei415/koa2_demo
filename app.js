@@ -7,18 +7,14 @@ const bodyparser = require('koa-bodyparser')
 const logger = require('koa-logger')
 const ejs = require('ejs');
 const cors = require('koa2-cors');
+const path = require('path');
+const staticCache = require('koa-static-cache');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
 
 
 app.use(cors({
-  // origin: function (ctx) {
-  //     if (ctx.url === '/getlist') {
-  //         return "*"; // 允许来自所有域名请求
-  //     }
-  //     return 'http://localhost:8080'; // 这样就能只允许 http://localhost:8080 这个域名的请求了
-  // },
   origin:'*',
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
   maxAge: 5,
@@ -26,6 +22,8 @@ app.use(cors({
   allowMethods: ['GET', 'POST', 'DELETE'],
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
+
+
 
 // error handler
 onerror(app)
@@ -37,6 +35,9 @@ app.use(bodyparser({
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
+app.use(staticCache(path.join(__dirname, 'public'), {
+  maxAge: 365 * 24 * 60 * 60
+}))
 
 app.use(views(__dirname + '/views', {
   map : {html:'ejs'}
