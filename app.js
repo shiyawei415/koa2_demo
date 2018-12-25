@@ -12,7 +12,7 @@ const staticCache = require('koa-static-cache');
 
 const index = require('./routes/index')
 const users = require('./routes/users')
-
+const read  = require('./routes/read')
 
 app.use(cors({
   origin:'*',
@@ -22,8 +22,6 @@ app.use(cors({
   allowMethods: ['GET', 'POST', 'DELETE'],
   allowHeaders: ['Content-Type', 'Authorization', 'Accept'],
 }))
-
-
 
 // error handler
 onerror(app)
@@ -35,7 +33,7 @@ app.use(bodyparser({
 app.use(json())
 app.use(logger())
 app.use(require('koa-static')(__dirname + '/public'))
-app.use(staticCache(path.join(__dirname, 'public'), {
+app.use(staticCache(path.join(__dirname, '/public'), {
   maxAge: 365 * 24 * 60 * 60
 }))
 
@@ -54,6 +52,7 @@ app.use(async (ctx, next) => {
 // routes
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
+app.use(read.routes(), users.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

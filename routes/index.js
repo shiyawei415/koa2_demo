@@ -2,15 +2,12 @@ const router = require('koa-router')()
 const goodsList = require('../model/goodslist');
 
 router.get('/', async (ctx, next) => {
-  await ctx.render('index', {
-    title: 'Hello Koa 2!'
-  })
+  await ctx.render('index')
 })
 
 router.get('/excel', async (ctx, next) => {
   await ctx.render('excel');
 })
-
 
 //获取所以物品list
 router.get('/getList', async ctx => {
