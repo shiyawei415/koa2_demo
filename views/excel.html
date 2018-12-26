@@ -15,7 +15,7 @@
             <select v-model="curval">
                 <option v-for="(item,index) in goodsArr" :key="index" :value="item">{{ item.name }}</option>
             </select>
-            <input type="text" id="name" placeholder="请输入名称" v-model="curval.name">
+            <input type="text" id="name" placeholder="请输入名称" v-model="curval.name" @input="search">
             <input type="number" id="price" placeholder="请输入单价" v-model="curval.price">
             <span>元</span>
             <input type="number" id="number" placeholder="请输入数量" v-model="curval.num">

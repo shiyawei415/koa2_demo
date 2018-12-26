@@ -10,8 +10,14 @@ const fs = require("fs");
 
 router.prefix('/read');
 
-router.get('/list',async ctx => {
-    ctx.body = 123;
+router.get('/list/:id',async ctx => {
+    ctx.body = {
+        url:    ctx.url,
+        method: ctx.method,
+        query:  ctx.request.query,
+        querystring:  ctx.request.querystring,
+        params: ctx.params
+    };
 });
 
 

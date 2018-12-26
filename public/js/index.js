@@ -42,7 +42,7 @@ new Vue({
                 data:{ name,price,company,num }
             }).then( res =>{
                 this.toggleLoad(false);
-                if(res.code == 0){
+                if(res.success){
                     that.getlist();
                     that.googs.name = '';
                 }
@@ -64,7 +64,7 @@ new Vue({
                     url:'/delItem',
                     data:{ id }
                 }).then( res =>{
-                    if(res.code == 0){
+                    if(res.success){
                         that.list.splice(index,1);
                         that.toggleLoad(false);
                     }
@@ -90,7 +90,7 @@ new Vue({
                 url:'/updataItem',
                 data:{ name,price,company,num ,id:_id}
             }).then( res =>{
-                if(res.code == 0){
+                if(res.success){
                     that.getlist();
                     that.ishow = false;
                 }
@@ -104,11 +104,18 @@ new Vue({
         //获取list
         getlist() {
             this.toggleLoad(true);
-            
             $.ajax({url:'/getlist'}).then( res =>{
-                this.list = res;
-                this.toggleLoad(false);
-            })
+                $.ajax({
+                    url: '/getlist'
+                }).then(res => {
+                    this.toggleLoad(false);
+                    if(res.success){
+                        this.list = res.data;
+                    }else{
+                        alert(res.msg)
+                    }
+                });
+            });
         },
 
         //切换显示load

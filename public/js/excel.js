@@ -31,9 +31,25 @@ new Vue({
             $.ajax({
                 url: '/getlist'
             }).then(res => {
-                this.goodsArr = res;
-                this.curval = res[0];
+                if(res.success){
+                    this.goodsArr = res.data;
+                    this.curval = res.data[0];
+                }else{
+                    alert(res.msg)
+                }
             })
+        },
+        //模糊搜索
+        search(){
+            let name = this.curval.name;
+            $.ajax({
+                url: '/getItem',
+                data:{ name  },
+            }).then(res => {
+                if(res.success){
+                    this.goodsArr = res.data;
+                }
+            });
         },
         //添加
         add() {

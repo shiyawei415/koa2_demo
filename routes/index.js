@@ -11,9 +11,20 @@ router.get('/excel', async (ctx, next) => {
 
 //获取所以物品list
 router.get('/getList', async ctx => {
-  const data1 = await goodsList.find()
-  ctx.response.body = data1
-})
+  await goodsList.find().then( res => {
+    ctx.response.body = {
+      data:res,
+      msg:'成功',
+      success:true
+    };
+  }).catch( err => {
+    ctx.response.body = {
+      data:err,
+      msg:'失败',
+      success:false
+    };
+  });
+});
 
 //添加物品
 router.post('/addItem', async ctx => {
@@ -23,7 +34,7 @@ router.post('/addItem', async ctx => {
   });
   if (queryitem.length) {
     ctx.response.body = {
-      code: 1,
+      success:false,
       msg: '不可重复添加'
     }
   } else {
@@ -31,12 +42,12 @@ router.post('/addItem', async ctx => {
     let data = await goodsItem.save();
     if (data._id) {
       ctx.response.body = {
-        code: 0,
+        success:true,
         msg: '成功'
       }
     } else {
       ctx.response.body = {
-        code: 1,
+        success:false,
         err,
         msg: '失败'
       }
@@ -53,12 +64,12 @@ router.post('/delItem', async ctx => {
   let response = {};
   if (data.ok) {
     ctx.response.body = {
-      code: 0,
+      success:true,
       msg: '成功'
     }
   } else {
     ctx.response.body = {
-      code: 1,
+      success:false,
       msg: '失败'
     }
   }
@@ -73,16 +84,48 @@ router.post('/updataItem', async ctx => {
   await goodsList.update(wherestr, updatestr, function (err, res) {
     if (err) {
       ctx.response.body = {
-        code: 1,
+        success:false,
         msg: '失败'
       }
     } else {
       ctx.response.body = {
-        code: 0,
+        success:true,
         msg: '成功'
       }
     }
   });
+});
+
+//模糊查询
+router.get('/getItem', async ctx => {
+  const keyword = ctx.request.query.name;
+
+  if(!keyword){
+    return ctx.body = ctx.response.body = {
+      success:false,
+      msg:'缺少参数'
+    }
+  }
+
+  await goodsList.find(
+      {
+        $or : [ 
+          {'name': {'$regex': keyword, $options: '$i'}},
+        ]
+      }
+  ).then(res => {
+    ctx.response.body = {
+      success:true,
+      msg:'成功',
+      data:res
+    }
+  }).catch( err => {
+    ctx.response.body = {
+      success:false,
+      msg:'失败'+err
+    }
+  })
+  
 });
 
 
