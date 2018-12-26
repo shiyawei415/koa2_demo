@@ -98,9 +98,10 @@ router.post('/updataItem', async ctx => {
 
 //模糊查询
 router.get('/getItem', async ctx => {
+  const keys = Object.keys(ctx.request.query);
   const keyword = ctx.request.query.name;
-
-  if(!keyword){
+  
+  if(!keys.includes('name')){
     return ctx.body = ctx.response.body = {
       success:false,
       msg:'缺少参数'
