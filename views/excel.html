@@ -11,6 +11,15 @@
 
     <div id="excel" class="main">
         <%-include("header.html",{index:2})%>
+
+        <el-row :gutter="20" style="margin-bottom:20px;">
+            <el-col :span="7">
+                <span class="demonstration">时间：</span>
+                <el-date-picker v-model="lastVal[2].index" value-format="yyyy-M-d" type="date" size="small" placeholder="选择日期">
+                </el-date-picker>
+            </el-col>
+        </el-row>
+
         <div class="top_form form_box">
             <select v-model="curval">
                 <option v-for="(item,index) in goodsArr" :key="index" :value="item">{{ item.name }}</option>
@@ -20,7 +29,7 @@
             <span>元</span>
             <input type="number" id="number" placeholder="请输入数量" v-model="curval.num">
             <input type="text" id="company" placeholder="请输入单位" v-model="curval.company">
-            <input type="button"  @click="add" value="增加">
+            <input type="button" @click="add" value="增加">
         </div>
 
         <div class="table_box" v-show="selarr.length">

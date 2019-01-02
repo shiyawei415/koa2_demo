@@ -1,3 +1,8 @@
+function curdate(){
+    let date = new Date();
+    return date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
+}
+
 new Vue({
     el: '#excel',
     data: {
@@ -12,6 +17,14 @@ new Vue({
             },
             {
                 index: "签字：",
+                name: "",
+                price: "",
+                num: "",
+                company: "",
+                count: ''
+            },
+            {
+                index: curdate(),
                 name: "",
                 price: "",
                 num: "",
@@ -98,16 +111,14 @@ new Vue({
         exportExcel() {
             let {
                 selarr,
-                lastVal
+                lastVal,
             } = this;
             let option = {};
-            let date = new Date();
-            let ymd = date.getFullYear() + "-" + (date.getMonth() + 1) + "-" + date.getDate();
-
-            option.fileName = "物品列表" + ymd;
+  
+            option.fileName = "送货单-" + curdate();
             option.datas = [{
                 sheetData: selarr.concat(lastVal),
-                sheetName: "sheet",
+                sheetName: "送货单",
                 sheetFilter: ["index", "name", "company", "num", "price", "count"],
                 sheetHeader: ["序号", "商品名称", "单位", "数量", "单价", "总价"]
             }];
