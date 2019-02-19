@@ -1,5 +1,25 @@
 const router = require('koa-router')()
 const goodsList = require('../model/goodslist');
+const newsList = require('../model/newslist');
+
+var getip = function(req) {
+  var ip = req.headers['x-real-ip'] ||
+      req.headers['x-forwarded-for'] ||
+      req.socket.remoteAddress || '';
+      console.log('ip1:'+req.headers['x-real-ip'])
+      console.log('ip2:'+ req.headers['x-forwarded-for'])
+      console.log('ip3:'+ req.socket.remoteAddress)
+      console.log('ip4:'+ ip)
+  if(ip.split(',').length>0){
+      ip = ip.split(',')[0];
+  }
+  if(ip.indexOf('::ffff:') > -1){
+      ip = ip.split('::ffff:')[1]
+  }
+  return ip;
+};
+
+
 
 router.get('/', async (ctx, next) => {
   await ctx.render('index')
@@ -8,6 +28,36 @@ router.get('/', async (ctx, next) => {
 router.get('/excel', async (ctx, next) => {
   await ctx.render('excel');
 })
+
+router.get('/ip', async (ctx, next) => {
+  await ctx.render('ip',{ ip : getip(ctx.req) } )
+})
+
+//获取newlist -test
+router.get('/newslist', async ctx => {
+  var query = ctx.request.query;
+  var pagesize = query.pageSize;
+  var pageNum = query.pageNum;
+  var total = await newsList.count({});
+
+  await newsList.find().skip(pagesize*pageNum).limit(pagesize).then( res => {
+    ctx.response.body = {
+      data:{
+        list:res,
+        totalCount:total
+      },
+      code:0,
+      msg:'成功'
+    };
+  }).catch( err => {
+    ctx.response.body = {
+      data:err,
+      msg:'失败',
+      success:false
+    };
+  });
+
+});
 
 //获取所以物品list
 router.get('/getList', async ctx => {
