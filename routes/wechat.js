@@ -25,9 +25,10 @@ router.prefix('/wx');
 
 
 router.get('/gettoken', async (ctx, next) => {
-    let res = await superagent.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +APPID+ '&secret=' + appsecret);
-
-    ctx.response.body = res;
+    
+    await superagent.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +APPID+ '&secret=' + appsecret).then(res => {
+        ctx.response.body = res;
+    })
 })
 
 router.get('/wxcallback', async (ctx, next) => {
