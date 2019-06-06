@@ -1,7 +1,8 @@
 const router = require('koa-router')()
 const superagent = require('superagent');
-const goodsList = require('../model/goodslist');
-const newsList = require('../model/newslist');
+
+const wxconfig = require('../config/wxconfig.js');
+
 
 const getip = function (req) {
     var ip = req.headers['x-real-ip'] ||
@@ -16,8 +17,8 @@ const getip = function (req) {
     return ip;
 };
 
-const APPID = 'wx2d0fac93afc235cf';
-const appsecret = '29b9a7e5c9735e481f6869d53b6ad17b';
+const APPID = wxconfig.wechat.appID;
+const appsecret = wxconfig.wechat.appSecret;
 const REDIRECT_URI = 'http://wu.shiyawei.com/wx/wxcallback';
 
 

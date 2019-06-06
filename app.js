@@ -47,19 +47,19 @@ app.use(views(__dirname + '/views', {
 
 
 //微信token验证
-app.use(async ctx => {
-    const { signature, timestamp, nonce, echostr } = ctx.query  
-    const token = wxconfig.wechat.token
-    let hash = crypto.createHash('sha1')
-    const arr = [token, timestamp, nonce].sort()
-    hash.update(arr.join(''))
-    const shasum = hash.digest('hex')
-    if(shasum === signature){
-      return ctx.body = echostr
-    }
-    ctx.status = 401      
-    ctx.body = 'Invalid signature'
-})
+// app.use(async ctx => {
+//     const { signature, timestamp, nonce, echostr } = ctx.query  
+//     const token = wxconfig.wechat.token
+//     let hash = crypto.createHash('sha1')
+//     const arr = [token, timestamp, nonce].sort()
+//     hash.update(arr.join(''))
+//     const shasum = hash.digest('hex')
+//     if(shasum === signature){
+//       return ctx.body = echostr
+//     }
+//     ctx.status = 401      
+//     ctx.body = 'Invalid signature'
+// })
 
 // logger
 app.use(async (ctx, next) => {
