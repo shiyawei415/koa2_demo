@@ -13,6 +13,7 @@ const staticCache = require('koa-static-cache');
 const index = require('./routes/index')
 const users = require('./routes/users')
 const read  = require('./routes/read')
+const wechat  = require('./routes/wechat')
 
 app.use(cors({
   origin:'*',
@@ -53,6 +54,7 @@ app.use(async (ctx, next) => {
 app.use(index.routes(), index.allowedMethods())
 app.use(users.routes(), users.allowedMethods())
 app.use(read.routes(), read.allowedMethods())
+app.use(wechat.routes(), wechat.allowedMethods())
 
 // error-handling
 app.on('error', (err, ctx) => {

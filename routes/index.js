@@ -6,10 +6,6 @@ var getip = function(req) {
   var ip = req.headers['x-real-ip'] ||
       req.headers['x-forwarded-for'] ||
       req.socket.remoteAddress || '';
-      console.log('ip1:'+req.headers['x-real-ip'])
-      console.log('ip2:'+ req.headers['x-forwarded-for'])
-      console.log('ip3:'+ req.socket.remoteAddress)
-      console.log('ip4:'+ ip)
   if(ip.split(',').length>0){
       ip = ip.split(',')[0];
   }
