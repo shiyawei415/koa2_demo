@@ -4,21 +4,6 @@ const newsList = require('../model/newslist');
 const index_middleware = require('../wechat/index_middleware');
 const config = require('../wechat/config');
 
-var getip = function(req) {
-  var ip = req.headers['x-real-ip'] ||
-      req.headers['x-forwarded-for'] ||
-      req.socket.remoteAddress || '';
-  if(ip.split(',').length>0){
-      ip = ip.split(',')[0];
-  }
-  if(ip.indexOf('::ffff:') > -1){
-      ip = ip.split('::ffff:')[1]
-  }
-  return ip;
-};
-
-
-
 router.get('/', index_middleware.get(config.wechat));
 
 router.get('/index', async (ctx, next) => {
@@ -29,9 +14,6 @@ router.get('/excel', async (ctx, next) => {
   await ctx.render('excel');
 })
 
-router.get('/ip', async (ctx, next) => {
-  await ctx.render('ip',{ ip : getip(ctx.req) } )
-})
 
 //获取newlist -test
 router.get('/newslist', async ctx => {
