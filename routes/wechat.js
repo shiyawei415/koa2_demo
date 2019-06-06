@@ -18,7 +18,7 @@ const getip = function (req) {
 
 const APPID = 'wx2d0fac93afc235cf';
 const appsecret = '29b9a7e5c9735e481f6869d53b6ad17b';
-const REDIRECT_URI = '/wx/wxcallback';
+const REDIRECT_URI = 'http://wu.shiyawei.com/wx/wxcallback';
 
 
 router.prefix('/wx');
@@ -62,7 +62,7 @@ router.get('/wxcallback', async (ctx, next) => {
 router.get('/wxlogin', async (ctx, next) => {
     let host = ctx.request.header.host;
     let url = 'https://open.weixin.qq.com/connect/oauth2/authorize?appid=' + APPID +
-        '&redirect_uri=' + host + REDIRECT_URI +
+        '&redirect_uri=' + REDIRECT_URI +
         '&response_type=code' +
         '&scope=snsapi_userinfo' +
         '&state=STATE#wechat_redirect';
