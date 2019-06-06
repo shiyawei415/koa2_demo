@@ -24,6 +24,12 @@ const REDIRECT_URI = 'http://wu.shiyawei.com/wx/wxcallback';
 router.prefix('/wx');
 
 
+router.get('/gettoken', async (ctx, next) => {
+    let res = await superagent.get('https://api.weixin.qq.com/cgi-bin/token?grant_type=client_credential&appid=' +APPID+ '&secret=' + appsecret);
+
+    ctx.response.body = res;
+})
+
 router.get('/wxcallback', async (ctx, next) => {
     let code = ctx.query.code
     let access_token = ''
@@ -58,6 +64,7 @@ router.get('/wxcallback', async (ctx, next) => {
         info:infostr
     })
 })
+
 
 router.get('/wxlogin', async (ctx, next) => {
     let host = ctx.request.header.host;
