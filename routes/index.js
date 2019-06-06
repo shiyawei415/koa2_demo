@@ -1,12 +1,9 @@
 const router = require('koa-router')()
 const goodsList = require('../model/goodslist');
 const newsList = require('../model/newslist');
-const index_middleware = require('../wechat/index_middleware');
-const config = require('../wechat/config');
 
-router.get('/', index_middleware.get(config.wechat));
 
-router.get('/index', async (ctx, next) => {
+router.get('/', async (ctx, next) => {
   await ctx.render('index')
 })
 

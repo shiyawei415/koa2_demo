@@ -10,6 +10,7 @@
   },
   "dependencies": {
     "cheerio": "^1.0.0-rc.2",
+    "crypto": "^1.0.1",
     "debug": "^2.6.3",
     "ejs": "^2.6.1",
     "eventproxy": "^1.0.0",

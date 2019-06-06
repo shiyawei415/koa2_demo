@@ -15,6 +15,9 @@ const users = require('./routes/users')
 const read  = require('./routes/read')
 const wechat  = require('./routes/wechat')
 
+const crypto = require('crypto');
+const wxconfig = require('./config/wxconfig.js');
+
 app.use(cors({
   origin:'*',
   exposeHeaders: ['WWW-Authenticate', 'Server-Authorization'],
@@ -41,6 +44,22 @@ app.use(staticCache(path.join(__dirname, '/public'), {
 app.use(views(__dirname + '/views', {
   map : {html:'ejs'}
 }));
+
+
+//微信token验证
+app.use(async ctx => {
+    const { signature, timestamp, nonce, echostr } = ctx.query  
+    const token = wxconfig.wechat.token
+    let hash = crypto.createHash('sha1')
+    const arr = [token, timestamp, nonce].sort()
+    hash.update(arr.join(''))
+    const shasum = hash.digest('hex')
+    if(shasum === signature){
+      return ctx.body = echostr
+    }
+    ctx.status = 401      
+    ctx.body = 'Invalid signature'
+})
 
 // logger
 app.use(async (ctx, next) => {
