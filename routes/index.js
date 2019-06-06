@@ -19,8 +19,9 @@ var getip = function(req) {
 
 
 
-router.get('/', async (ctx, next) => {
-  index_middleware.get(config.wechat)
+router.get('/', index_middleware.get(config.wechat));
+
+router.get('/index', async (ctx, next) => {
   await ctx.render('index')
 })
 
