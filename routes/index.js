@@ -1,6 +1,8 @@
 const router = require('koa-router')()
 const goodsList = require('../model/goodslist');
 const newsList = require('../model/newslist');
+const index_middleware = require('../wechat/index_middleware');
+const config = require('../wechat/config');
 
 var getip = function(req) {
   var ip = req.headers['x-real-ip'] ||
@@ -18,6 +20,7 @@ var getip = function(req) {
 
 
 router.get('/', async (ctx, next) => {
+  index_middleware.get(config.wechat)
   await ctx.render('index')
 })
 
